@@ -41,21 +41,58 @@ int num_yellows(char answer[], char guess[]){
 }
 
 void test(void){
+	// Basic tests
 	char word1[6] = "HELLO";
 	char word2[6] = "WORLD";
-
 	// 'L' is green, 'O' is yellow
 	assert(num_greens(word1, word2) == 1);
 	assert(num_yellows(word1, word2) == 1);
 
+	// Reverse should give same result
 	strcpy(word1, "APPLE");
 	strcpy(word2, "ALLEY");
-
 	// 'A' is green, 'L' and 'E' are yellow
 	assert(num_greens(word1, word2) == 1);
 	assert(num_yellows(word1, word2) == 2);
-
 	// Should give same result if answer and guess swapped
 	assert(num_greens(word2, word1) == 1);
+	assert(num_yellows(word2, word1) == 2);
+
+	// Case insensitivity test
+	strcpy(word1, "Alley");
+	strcpy(word2, "APPLE");
+	assert(num_greens(word1, word2) == 1);
+	assert(num_yellows(word1, word2) == 2);
+
+	// No matches
+	strcpy(word1, "ABCDE");
+	strcpy(word2, "FGHIJ");
+	assert(num_greens(word1, word2) == 0);
+	assert(num_yellows(word1, word2) == 0);
+
+	// All letters match but in wrong positions
+	strcpy(word1, "ABCDE");
+	strcpy(word2, "EABCD");
+	assert(num_greens(word1, word2) == 0);
+	assert(num_yellows(word1, word2) == 5);
+
+	// All letters match in correct positions
+	strcpy(word1, "ABCDE");
+	strcpy(word2, "ABCDE");
+	assert(num_greens(word1, word2) == 5);
+	assert(num_yellows(word1, word2) == 0);
+
+	// Single letter words
+	strcpy(word1, "IIIII");
+	strcpy(word2, "IIIII");
+	assert(num_greens(word1, word2) == 5);
+	assert(num_yellows(word1, word2) == 0);
+
+	// Duplicated letters
+	strcpy(word1, "AABBB");
+	strcpy(word2, "ABABA");
+	assert(num_greens(word1, word2) == 2);
+	assert(num_yellows(word1, word2) == 2);
+	assert(num_greens(word2, word1) == 2);
 	assert(num_yellows(word2, word1) == 2);
 }
