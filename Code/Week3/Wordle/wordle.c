@@ -4,38 +4,34 @@ int num_greens(char answer[], char guess[]){
 	int greens = 0;
 	for (int i = 0; i < 5; i++){
 		// Check if the letters match in the same position (case-insensitive)
-		if (tolower(guess[i]) == tolower(answer[i])) {
-			// printf("Answer: %c, Guess: %c\n", answer[i], guess[i]);
-			greens++;
-		}
+		if (tolower(guess[i]) == tolower(answer[i])) greens++;
 	}
 	return greens;
 }
 
 int num_yellows(char answer[], char guess[]){
+	// Duplicate the arrays to avoid modifying the originals
+	answer = strdup(answer);
+	guess = strdup(guess);
 	int yellows = 0;
-	bool matched[10] = {false};
+	// bool matched[10] = {false};
+
 	for (int i = 0; i < 5; i++){
 		// Check if the letters match in the same position (case-insensitive)
 		if (tolower(guess[i]) == tolower(answer[i])) {
 			// Mark this position as guessed
-			matched[i] = true;
-			matched[i + 5] = true; 
+			guess[i] = '*'; // Invalidate this position in guess
+			answer[i] = '*'; // Invalidate this position in answer
 		}
 	}
 
 	for (int i = 0; i < 5; i++){
-		if (matched[i]) {
-			continue; // Skip already guessed positions
-		}
+		if (answer[i] == '*') continue; // Skip already guessed positions
 		for (int j = 0; j < 5; j++){
-			if (matched[j+5]) {
-				continue; // Skip already guessed positions
-			}
-			if (!matched[j+5] && tolower(answer[i]) == tolower(guess[j])) {
+			if (guess[j] != '*' && tolower(answer[i]) == tolower(guess[j])) {
 				yellows++;
-				matched[i] = true; // Mark this position as guessed
-				matched[j+5] = true; // Mark this position as guessed
+				guess[j] = '*'; // Invalidate this position in guess
+				answer[i] = '*'; // Invalidate this position in answer
 				break; // Move to the next letter in guess
 			}
 		}
