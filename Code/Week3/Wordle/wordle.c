@@ -1,3 +1,13 @@
+/* 
+ * wordle.c
+ * 
+ * Implementation of functions to count "greens" and "yellows" in a Wordle guess.
+ * Greens are letters that are correct and in the correct position.
+ * Yellows are letters that are correct but in the wrong position.
+ *
+ * Modified by Cenarius Lu <ig25518@bristol.ac.uk>.
+ */
+
 #include "wordle.h"
 
 int num_greens(char answer[], char guess[]){
