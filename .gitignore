@@ -1,0 +1,140 @@
+# 通用 C 项目 .gitignore 模板
+# 说明：包含常见的构建产物、临时文件、IDE/编辑器配置、平台特定文件等。
+# 根据项目需要可增删条目。
+
+# -----------------------------
+# 构建目录 / 输出目录
+# -----------------------------
+build/
+bin/
+out/
+Debug/
+Release/
+cmake-build-*/
+
+# CMake 生成文件
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# -----------------------------
+# 对象文件 / 中间文件
+# -----------------------------
+*.o
+*.obj
+*.lo
+*.la
+*.d
+*.elf
+
+# 预编译头
+*.gch
+*.pch
+
+# 静态/动态库 / 可执行文件
+*.a
+*.so
+*.so.*
+*.dll
+*.dylib
+*.exe
+a.out
+
+# -----------------------------
+# 编辑器 / IDE
+# -----------------------------
+# Visual Studio Code
+# 忽略工作区和本地设置、扩展测试文件、历史等。
+# 如果你希望保留某些 .vscode 配置（例如 launch.json 或 extensions.json），
+# 可使用例外规则（在本文件中以 "!" 开头）。
+.vscode/
+.vscode-test/
+.vscode/**.code-workspace
+.code-workspace
+# 本地历史（VSCode 扩展）
+.history/
+# 其他可能的 VS Code 缓存/backup/db
+.vscode/*.db
+.vscode/backup/
+
+# 其它编辑器/IDE
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# vim / swap / temp
+*~
+*.swp
+*.swo
+
+# emacs
+*~
+.#*
+
+# Visual Studio
+*.vcxproj*
+*.user
+*.sdf
+# 编辑器 / IDE
+# -----------------------------
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+*.code-workspace
+
+# vim / swap / temp
+*~
+*.swp
+*.swo
+
+# emacs
+*~
+.#*
+
+# Visual Studio
+*.vcxproj*
+*.user
+*.sdf
+
+# -----------------------------
+# 平台相关
+# -----------------------------
+# macOS
+.DS_Store
+
+# Windows thumbnail/cache
+Thumbs.db
+
+# -----------------------------
+# 其它常见临时/备份文件
+# -----------------------------
+*.tmp
+*.bak
+*.orig
+*.rej
+
+# tags / cscope / symbol files
+tags
+TAGS
+cscope.*
+
+# 安装脚本 / configure 生成文件
+config.log
+config.status
+install-sh
+
+# 打包产物
+dist/
+dist-*/
+*.tar.gz
+*.zip
+
+# 如果你希望保留某些目录内的特定文件，可以使用 "!" 例外规则。
+# 例如：保留 build/.gitkeep
+# !build/.gitkeep
+
+# 以上为基础模板；根据你的工具链（Makefile/CMake/meson）、IDE、CI 环境
+# 以及其它语言混合（如 Python 脚本）可酌情补充。
+
