@@ -9,12 +9,12 @@ enum validchars {outofbounds='\0', unknown=' ', grass='.', tent='+', tree='*', s
 typedef enum validchars validchars;
 
 struct board{
-   // Tent Count Across the top / per Column
-   unsigned short tents_col[BSIZE];
-   // The field, square
-   char f[BSIZE][BSIZE];
-   // Tent Count Down the side / per Row
-   unsigned short tents_row[BSIZE];
+    // Tent Count Across the top / per Column
+    unsigned short tents_col[BSIZE];
+    // The field, square
+    char f[BSIZE][BSIZE];
+    // Tent Count Down the side / per Row
+    unsigned short tents_row[BSIZE];
 };
 typedef struct board board;
 
