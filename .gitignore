@@ -131,10 +131,8 @@ dist-*/
 *.tar.gz
 *.zip
 
-# 如果你希望保留某些目录内的特定文件，可以使用 "!" 例外规则。
-# 例如：保留 build/.gitkeep
-# !build/.gitkeep
-
-# 以上为基础模板；根据你的工具链（Makefile/CMake/meson）、IDE、CI 环境
-# 以及其它语言混合（如 Python 脚本）可酌情补充。
-
+# dSYM 文件（macOS 调试符号）
+*.dSYM
+# 忽略带有 _dbg 后缀的 dSYM（例如: myprog_dbg.dSYM）
+*_dbg.dSYM
+*_dbg.dSYM/
