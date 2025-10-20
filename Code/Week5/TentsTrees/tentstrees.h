@@ -5,6 +5,10 @@
 #include <ctype.h>
 #include <string.h>
 
+#ifndef BSIZE
+#define BSIZE 6
+#endif
+
 enum validchars {outofbounds='\0', unknown=' ', grass='.', tent='+', tree='*', sep='|'};
 typedef enum validchars validchars;
 
