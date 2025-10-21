@@ -152,7 +152,7 @@ bool has_adjacent_tent(board* p, int row, int col) {
     return false;
 }
 
-// Rule 1: If a row or column already has the correct number of tents, all unknowns → grass.
+// Rule 1: If a row or column already has the correct number of tents, all unknowns -> grass.
 bool full_tents(board* p, bool* changed) {
     for (int r = 0; r < BSIZE; r++) {
         if (count_tents_in_row(p, r) == p->tents_row[r]) {
@@ -178,7 +178,7 @@ bool full_tents(board* p, bool* changed) {
     return true;
 }
 
-// Rule 2: Any unknown cell not 4-connected to a tree → grass.
+// Rule 2: Any unknown cell not 4-connected to a tree -> grass.
 bool not_near_tree(board* p, bool* changed) {
     for (int r = 0; r < BSIZE; r++) {
         for (int c = 0; c < BSIZE; c++) {
@@ -191,7 +191,7 @@ bool not_near_tree(board* p, bool* changed) {
     return true;
 }
 
-// Rule 3: If the number of unknown cells equals the number of tents required, all unknowns → tents.
+// Rule 3: If the number of unknown cells equals the number of tents required, all unknowns -> tents.
 bool unknown_is_required(board* p, bool* changed) {
     for (int r = 0; r < BSIZE; r++) {
         int tents_needed = p->tents_row[r] - count_tents_in_row(p, r);
@@ -219,7 +219,7 @@ bool unknown_is_required(board* p, bool* changed) {
     return true;
 }
 
-// Rule 4: Any unknown cell 8-connected to a tent → grass.
+// Rule 4: Any unknown cell 8-connected to a tent -> grass.
 bool around_tent(board* p, bool* changed) {
     for (int r = 0; r < BSIZE; r++) {
         for (int c = 0; c < BSIZE; c++) {
@@ -232,7 +232,7 @@ bool around_tent(board* p, bool* changed) {
     return true;
 }
 
-// Rule 5: For any tree and its 4-connected cells, if there is exactly one unknown and zero tents, then that unknown → tent.
+// Rule 5: For any tree and its 4-connected cells, if there is exactly one unknown and zero tents, then that unknown -> tent.
 bool near_tree_1_left(board* p, bool* changed) {
     for (int r = 0; r < BSIZE; r++) {
         for (int c = 0; c < BSIZE; c++) {
