@@ -1,3 +1,9 @@
+/*
+ * Tents and Trees puzzle solver
+ * 
+ * by Cenarius Lu <ig25518@bristol.ac.uk>
+ */
+
 #include "tentstrees.h"
 
 
