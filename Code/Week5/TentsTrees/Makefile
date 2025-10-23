@@ -1,7 +1,7 @@
 CFLAGS := -Wall -Wextra -pedantic -std=c99 -Wfloat-equal -Wvla -g3 -fsanitize=address -fsanitize=undefined
-#CFLAGS := -Wall -Wextra -pedantic -std=c99 -Wfloat-equal -Wvla -Werror -g3 -fsanitize=address -fsanitize=undefined
-CC := gcc
-#CC := clang
+# CFLAGS := -Wall -Wextra -pedantic -std=c99 -Wfloat-equal -Wvla -Werror -g3 -fsanitize=address -fsanitize=undefined
+# CC := gcc
+CC := clang
 
 run: tt6_d tt4_d
 	./tt6_d

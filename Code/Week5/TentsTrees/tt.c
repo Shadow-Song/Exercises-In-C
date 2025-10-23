@@ -1,21 +1,23 @@
 /*
- * Tents and Trees puzzle solver
- * 
- * by Cenarius Lu <ig25518@bristol.ac.uk>
- */
+* Tents and Trees puzzle solver
+* 
+* by Cenarius Lu <ig25518@bristol.ac.uk>
+*/
 
 #include "tentstrees.h"
 
-
 // Input board from string s, with top and side counts
-bool inputboard(char* s, char* top, char* side, board* p) {
+bool inputboard(char* s, char* top, char* side, board* p) 
+{
     // 0. Check for NULL pointers
-    if (s == NULL || top == NULL || side == NULL || p == NULL) {
+    if (s == NULL || top == NULL || side == NULL || p == NULL) 
+    {
         return false;
     }
 
     // 1. Check for empty string
-    if (s[0]=='\0') {
+    if (s[0]=='\0') 
+    {
         return false;
     }
 
@@ -24,20 +26,24 @@ bool inputboard(char* s, char* top, char* side, board* p) {
 
     // 2. Check string length
     size_t expected_length = BSIZE * (BSIZE + 1) - 1; // -1 because no sep at end of last line
-    if (strlen(s) != expected_length) {
+    if (strlen(s) != expected_length) 
+    {
         return false;
     }
 
     // 3. Check counts length
-    if (strlen(top) != BSIZE || strlen(side) != BSIZE) {
+    if (strlen(top) != BSIZE || strlen(side) != BSIZE) 
+    {
         return false;
     }
 
     // Load Board Size
-    for (int i=0; i<BSIZE; i++) {
+    for (int i=0; i<BSIZE; i++) 
+    {
 
         // 4. Check for invalid characters in counts
-        if (!isdigit((unsigned char)top[i]) || !isdigit((unsigned char)side[i])) {
+        if (!isdigit((unsigned char)top[i]) || !isdigit((unsigned char)side[i])) 
+        {
             return false;
         }
 
@@ -45,7 +51,8 @@ bool inputboard(char* s, char* top, char* side, board* p) {
         p->tents_row[i] = side[i] - '0';
 
         // 5. Check for invalid counts
-        if (p->tents_col[i] > BSIZE || p->tents_row[i] > BSIZE) {
+        if (p->tents_col[i] > BSIZE || p->tents_row[i] > BSIZE) 
+        {
             return false;
         }
 
@@ -54,35 +61,43 @@ bool inputboard(char* s, char* top, char* side, board* p) {
     }
 
     // 6. Check string sum for columns and rows
-    if (col_sum != row_sum) {
+    if (col_sum != row_sum) 
+    {
         return false;
     }
 
     // Load Board Squares
-    for (int r=0; r<BSIZE; r++) {
-        for (int c=0; c<BSIZE; c++) {
+    for (int r=0; r<BSIZE; r++) 
+    {
+        for (int c=0; c<BSIZE; c++) 
+        {
             char ch = s[r*(BSIZE+1)+c];
             // 7. Check for invalid characters
-            if (ch != unknown && ch != tree) {
+            if (ch != unknown && ch != tree) 
+            {
                 return false;
             }
             p->f[r][c] = ch;
         }
 
         // 8. Check for separator
-        if (s[(r+1)*(BSIZE+1)-1] != sep && r < BSIZE-1) {
+        if (s[(r+1)*(BSIZE+1)-1] != sep && r < BSIZE-1) 
+        {
             return false;
         }
     }
-
+    
     return true;
 }
 
 // Helper function: Count tents in a row
-int count_tents_in_row(board* p, int row) {
+int count_tents_in_row(board* p, int row) 
+{
     int count = 0;
-    for (int c = 0; c < BSIZE; c++) {
-        if (p->f[row][c] == tent) {
+    for (int c = 0; c < BSIZE; c++) 
+    {
+        if (p->f[row][c] == tent) 
+        {
             count++;
         }
     }
@@ -90,10 +105,13 @@ int count_tents_in_row(board* p, int row) {
 }
 
 // Helper function: Count tents in a column
-int count_tents_in_col(board* p, int col) {
+int count_tents_in_col(board* p, int col) 
+{
     int count = 0;
-    for (int r = 0; r < BSIZE; r++) {
-        if (p->f[r][col] == tent) {
+    for (int r = 0; r < BSIZE; r++) 
+    {
+        if (p->f[r][col] == tent) 
+        {
             count++;
         }
     }
@@ -101,10 +119,13 @@ int count_tents_in_col(board* p, int col) {
 }
 
 // Helper function: Count unknowns in a row
-int count_unknowns_in_row(board* p, int row) {
+int count_unknowns_in_row(board* p, int row) 
+{
     int count = 0;
-    for (int c = 0; c < BSIZE; c++) {
-        if (p->f[row][c] == unknown) {
+    for (int c = 0; c < BSIZE; c++) 
+    {
+        if (p->f[row][c] == unknown) 
+        {
             count++;
         }
     }
@@ -112,10 +133,13 @@ int count_unknowns_in_row(board* p, int row) {
 }
 
 // Helper function: Count unknowns in a column
-int count_unknowns_in_col(board* p, int col) {
+int count_unknowns_in_col(board* p, int col) 
+{
     int count = 0;
-    for (int r = 0; r < BSIZE; r++) {
-        if (p->f[r][col] == unknown) {
+    for (int r = 0; r < BSIZE; r++) 
+    {
+        if (p->f[r][col] == unknown) 
+        {
             count++;
         }
     }
@@ -123,16 +147,20 @@ int count_unknowns_in_col(board* p, int col) {
 }
 
 // Helper function: Check if cell is valid and has a tree (4-connected)
-bool has_adjacent_tree(board* p, int row, int col) {
+bool has_adjacent_tree(board* p, int row, int col) 
+{
     // Check 4 directions: up, down, left, right
     int dr[] = {-1, 1, 0, 0};
     int dc[] = {0, 0, -1, 1};
-    
-    for (int i = 0; i < 4; i++) {
+
+    for (int i = 0; i < 4; i++) 
+    {
         int nr = row + dr[i];
         int nc = col + dc[i];
-        if (nr >= 0 && nr < BSIZE && nc >= 0 && nc < BSIZE) {
-            if (p->f[nr][nc] == tree) {
+        if (nr >= 0 && nr < BSIZE && nc >= 0 && nc < BSIZE) 
+        {
+            if (p->f[nr][nc] == tree) 
+            {
                 return true;
             }
         }
@@ -141,14 +169,15 @@ bool has_adjacent_tree(board* p, int row, int col) {
 }
 
 // Helper function: Check if cell is adjacent to a tent (8-connected)
-bool has_adjacent_tent(board* p, int row, int col) {
+bool has_adjacent_tent(board* p, int row, int col) 
+{
     // Check 8 directions
     int dr[] = {-1, -1, -1, 0, 0, 1, 1, 1};
     int dc[] = {-1, 0, 1, -1, 1, -1, 0, 1};
-    
+
     for (int i = 0; i < 8; i++) {
-        int nr = row + dr[i];
-        int nc = col + dc[i];
+    int nr = row + dr[i];
+    int nc = col + dc[i];
         if (nr >= 0 && nr < BSIZE && nc >= 0 && nc < BSIZE) {
             if (p->f[nr][nc] == tent) {
                 return true;
@@ -159,9 +188,12 @@ bool has_adjacent_tent(board* p, int row, int col) {
 }
 
 // Rule 1: If a row or column already has the correct number of tents, all unknowns -> grass.
-bool full_tents(board* p, bool* changed) {
-    for (int r = 0; r < BSIZE; r++) {
-        if (count_tents_in_row(p, r) == p->tents_row[r]) {
+bool full_tents(board* p, bool* changed) 
+{
+    for (int r = 0; r < BSIZE; r++) 
+    {
+        if (count_tents_in_row(p, r) == p->tents_row[r]) 
+        {
             for (int c = 0; c < BSIZE; c++) {
                 if (p->f[r][c] == unknown) {
                     p->f[r][c] = grass;
@@ -170,11 +202,15 @@ bool full_tents(board* p, bool* changed) {
             }
         }
     }
-    
-    for (int c = 0; c < BSIZE; c++) {
-        if (count_tents_in_col(p, c) == p->tents_col[c]) {
-            for (int r = 0; r < BSIZE; r++) {
-                if (p->f[r][c] == unknown) {
+
+    for (int c = 0; c < BSIZE; c++) 
+    {
+        if (count_tents_in_col(p, c) == p->tents_col[c]) 
+        {
+            for (int r = 0; r < BSIZE; r++) 
+            {
+            if (p->f[r][c] == unknown) 
+                {
                     p->f[r][c] = grass;
                     *changed = true;
                 }
@@ -185,10 +221,14 @@ bool full_tents(board* p, bool* changed) {
 }
 
 // Rule 2: Any unknown cell not 4-connected to a tree -> grass.
-bool not_near_tree(board* p, bool* changed) {
-    for (int r = 0; r < BSIZE; r++) {
-        for (int c = 0; c < BSIZE; c++) {
-            if (p->f[r][c] == unknown && !has_adjacent_tree(p, r, c)) {
+bool not_near_tree(board* p, bool* changed) 
+{
+    for (int r = 0; r < BSIZE; r++) 
+    {
+        for (int c = 0; c < BSIZE; c++) 
+        {
+            if (p->f[r][c] == unknown && !has_adjacent_tree(p, r, c)) 
+            {
                 p->f[r][c] = grass;
                 *changed = true;
             }
@@ -198,25 +238,34 @@ bool not_near_tree(board* p, bool* changed) {
 }
 
 // Rule 3: If the number of unknown cells equals the number of tents required, all unknowns -> tents.
-bool unknown_is_required(board* p, bool* changed) {
-    for (int r = 0; r < BSIZE; r++) {
+bool unknown_is_required(board* p, bool* changed) 
+{
+    for (int r = 0; r < BSIZE; r++) 
+    {
         int tents_needed = p->tents_row[r] - count_tents_in_row(p, r);
-        if (tents_needed > 0 && count_unknowns_in_row(p, r) == tents_needed) {
-            for (int c = 0; c < BSIZE; c++) {
-                if (p->f[r][c] == unknown) {
+        if (tents_needed > 0 && count_unknowns_in_row(p, r) == tents_needed) 
+        {
+            for (int c = 0; c < BSIZE; c++) 
+            {
+                if (p->f[r][c] == unknown) 
+                {
                     p->f[r][c] = tent;
                     *changed = true;
                 }
             }
         }
     }
-    
-    for (int c = 0; c < BSIZE; c++) {
+
+    for (int c = 0; c < BSIZE; c++) 
+    {
         int tents_needed = p->tents_col[c] - count_tents_in_col(p, c);
-        if (tents_needed > 0 && count_unknowns_in_col(p, c) == tents_needed) {
-            for (int r = 0; r < BSIZE; r++) {
-                if (p->f[r][c] == unknown) {
-                    p->f[r][c] = tent;
+        if (tents_needed > 0 && count_unknowns_in_col(p, c) == tents_needed) 
+        {
+            for (int r = 0; r < BSIZE; r++) 
+            {
+                if (p->f[r][c] == unknown) 
+                {
+                p->f[r][c] = tent;
                     *changed = true;
                 }
             }
@@ -226,10 +275,14 @@ bool unknown_is_required(board* p, bool* changed) {
 }
 
 // Rule 4: Any unknown cell 8-connected to a tent -> grass.
-bool around_tent(board* p, bool* changed) {
-    for (int r = 0; r < BSIZE; r++) {
-        for (int c = 0; c < BSIZE; c++) {
-            if (p->f[r][c] == unknown && has_adjacent_tent(p, r, c)) {
+bool around_tent(board* p, bool* changed) 
+{
+    for (int r = 0; r < BSIZE; r++) 
+    {
+        for (int c = 0; c < BSIZE; c++) 
+        {
+            if (p->f[r][c] == unknown && has_adjacent_tent(p, r, c)) 
+            {
                 p->f[r][c] = grass;
                 *changed = true;
             }
@@ -239,32 +292,42 @@ bool around_tent(board* p, bool* changed) {
 }
 
 // Rule 5: For any tree and its 4-connected cells, if there is exactly one unknown and zero tents, then that unknown -> tent.
-bool near_tree_1_left(board* p, bool* changed) {
-    for (int r = 0; r < BSIZE; r++) {
-        for (int c = 0; c < BSIZE; c++) {
-            if (p->f[r][c] == tree) {
+bool near_tree_1_left(board* p, bool* changed) 
+{
+    for (int r = 0; r < BSIZE; r++) 
+    {
+        for (int c = 0; c < BSIZE; c++) 
+        {
+            if (p->f[r][c] == tree) 
+            {
                 int dr[] = {-1, 1, 0, 0};
                 int dc[] = {0, 0, -1, 1};
-                
+
                 int unknown_count = 0;
                 int unknown_r = -1, unknown_c = -1;
                 bool has_tent_nearby = false;
-                
-                for (int i = 0; i < 4; i++) {
+
+                for (int i = 0; i < 4; i++) 
+                {
                     int nr = r + dr[i];
                     int nc = c + dc[i];
-                    if (nr >= 0 && nr < BSIZE && nc >= 0 && nc < BSIZE) {
-                        if (p->f[nr][nc] == unknown) {
-                            unknown_count++;
-                            unknown_r = nr;
-                            unknown_c = nc;
-                        } else if (p->f[nr][nc] == tent) {
+                    if (nr >= 0 && nr < BSIZE && nc >= 0 && nc < BSIZE) 
+                    {
+                        if (p->f[nr][nc] == unknown) 
+                        {
+                        unknown_count++;
+                        unknown_r = nr;
+                        unknown_c = nc;
+                        } 
+                        else if (p->f[nr][nc] == tent) 
+                        {
                             has_tent_nearby = true;
                         }
                     }
                 }
-                
-                if (unknown_count == 1 && !has_tent_nearby) {
+
+                if (unknown_count == 1 && !has_tent_nearby) 
+                {
                     p->f[unknown_r][unknown_c] = tent;
                     *changed = true;
                 }
@@ -275,41 +338,49 @@ bool near_tree_1_left(board* p, bool* changed) {
 }
 
 // Check if board is solved (no unknowns remain)
-bool is_solved(board* p) {
+bool is_solved(board* p) 
+{
     // Check for NULL pointer
-    if (p == NULL) {
+    if (p == NULL) 
+    {
         return false;
     }
 
-    for (int r = 0; r < BSIZE; r++) {
-        for (int c = 0; c < BSIZE; c++) {
+    for (int r = 0; r < BSIZE; r++) 
+    {
+        for (int c = 0; c < BSIZE; c++) 
+        {
             if (p->f[r][c] == unknown) {
                 return false;
             }
         }
     }
+
     return true;
 }
 
 // Solve the board using the defined rules
-bool solve(board* p) {
-    if (p == NULL) {
+bool solve(board* p) 
+{
+    if (p == NULL) 
+    {
         return false;
     }
 
     bool changed = true;
-    
+
     // Keep applying rules until no more changes occur
-    while (changed) {
+    while (changed) 
+    {
         changed = false;
-        
+
         full_tents(p, &changed);
         not_near_tree(p, &changed);
         unknown_is_required(p, &changed);
         around_tent(p, &changed);
         near_tree_1_left(p, &changed);
     }
-    
+
     // Return true if board is completely solved (no unknowns remain)
     return is_solved(p);
 }
@@ -318,30 +389,36 @@ bool solve(board* p) {
 bool board2str(board b, char* s)
 {
     // Check for NULL string
-    if (s == NULL) {
+    if (s == NULL) 
+    {
         return false;
     }
-    
+
     int index = 0;
-    
+
     // Copy board to string with separators
-    for (int r = 0; r < BSIZE; r++) {
-        for (int c = 0; c < BSIZE; c++) {
+    for (int r = 0; r < BSIZE; r++) 
+    {
+        for (int c = 0; c < BSIZE; c++) 
+        {
             s[index++] = b.f[r][c];
         }
+
         // Add separator after each row except the last
-        if (r < BSIZE - 1) {
+        if (r < BSIZE - 1) 
+        {
             s[index++] = sep;
         }
     }
-    
+
     // Null-terminate the string
     s[index] = '\0';
-    
+
     return true;
 }
 
-void test(void) {
+void test(void) 
+{
     board b;
     char s[BSIZE*(BSIZE+1)];
 
